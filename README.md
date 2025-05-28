@@ -37,6 +37,7 @@
 
 ```bash
 pip install -r requirements.txt
+playwright install chromium
 ```
 
 > 建议使用 Python 3.10+，并将 pip 源切换为清华源以加快安装速度。
