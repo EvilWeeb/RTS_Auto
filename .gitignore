@@ -1,0 +1,28 @@
+# Python 缓存
+__pycache__/
+*.py[cod]
+*.pyo
+
+# 日志和结果输出
+logs/
+result/
+
+# cookie 文件
+*.json
+
+# 虚拟环境
+venv/
+
+# 安装器
+python-*.exe
+
+# IDE 配置
+.vscode/
+.idea/
+
+# Excel导入文件（若用于部署时不希望上传）
+import/*.xlsx
+
+# 系统文件
+.DS_Store
+Thumbs.db
