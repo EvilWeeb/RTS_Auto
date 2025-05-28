@@ -99,7 +99,13 @@ def process_store_codes(store_codes, task_runner, task_key):
         else:
             context = browser.new_context()
         page = context.new_page()
-        page.goto("https://boss.uat.mcdonalds.cn/")
+        # ⛔ 强制要求任务必须配置 URL
+        task_config = TASKS[task_key]
+        if "url" not in task_config:
+            print(f"❌ 任务 [{task_key}] 未配置登录地址，请在 task_registry.py 中添加 'url' 字段")
+            sys.exit(1)
+        page.goto(task_config["url"])
+
         if not os.path.exists(COOKIE_PATH):
             input("🟡 请手动登录后按回车继续...")
             context.storage_state(path=COOKIE_PATH)
