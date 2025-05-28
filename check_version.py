@@ -1,6 +1,6 @@
 import requests
 
-REMOTE_VERSION_URL = "https://github.com/EvilWeeb/RTS_Auto/blob/main/VERSION.txt"
+REMOTE_VERSION_URL = "https://gitee.com/Helesta/RTS_Auto/raw/main/VERSION.txt"
 LOCAL_VERSION_FILE = "VERSION.txt"
 
 def read_local_version():
