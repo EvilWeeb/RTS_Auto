@@ -31,8 +31,8 @@ def choose_import_file():
 
 
 
-def save_result_excel(logger):
-    input_path = f"import/{logger.task_key}.xlsx"
+def save_result_excel(logger,input_path):
+    # input_path = f"import/{logger.task_key}.xlsx"
     os.makedirs("result", exist_ok=True)
 
     output_path = os.path.join(
@@ -88,7 +88,7 @@ def load_task(task_key):
     mod = importlib.import_module(f"tasks.{task_key}")
     return getattr(mod, task_key)
 
-def process_store_codes(store_codes, task_runner, task_key):
+def process_store_codes(store_codes, task_runner, task_key,import_path):
     logger = Logger(task_key)
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False,slow_mo=500)
@@ -122,7 +122,7 @@ def process_store_codes(store_codes, task_runner, task_key):
                     logger.log_failure(code, "任务函数异常", e)
 
         logger.save()
-        save_result_excel(logger)
+        save_result_excel(logger,import_path)
         context.close()
         browser.close()
 
@@ -131,4 +131,4 @@ if __name__ == "__main__":
     import_path = choose_import_file()
     task_func = load_task(task_key)
     stores = read_store_list(task_key, import_path)
-    process_store_codes(stores, task_func, task_key)
+    process_store_codes(stores, task_func, task_key,import_path)
