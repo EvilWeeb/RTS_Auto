@@ -6,6 +6,9 @@ from playwright.sync_api import sync_playwright
 from logger import Logger
 from proxy_page import ProxyPage
 from task_registry import TASKS
+from check_version import check_for_update
+
+check_for_update()  # 更新检查
 
 COOKIE_PATH = "mcd_cookies.json"
 
