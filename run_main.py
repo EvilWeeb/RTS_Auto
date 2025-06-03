@@ -1,5 +1,5 @@
 # run_main.py
-import os, sys, time
+import os, sys
 import pandas as pd
 import importlib
 from playwright.sync_api import sync_playwright
@@ -10,6 +10,10 @@ from check_version import check_for_update
 from datetime import datetime
 
 check_for_update()  # 更新检查
+
+def ensure_directories():
+    for folder in ["import", "result", "logs"]:
+        os.makedirs(folder, exist_ok=True)
 
 def get_today_cookie_path(task_key):
     date_str = datetime.now().strftime("%Y%m%d")
@@ -125,6 +129,7 @@ def process_store_codes(store_codes, task_runner, task_key,import_path):
         browser.close()
 
 if __name__ == "__main__":
+    ensure_directories()
     task_key = choose_task()
     import_path = choose_import_file()
     task_func = load_task(task_key)
