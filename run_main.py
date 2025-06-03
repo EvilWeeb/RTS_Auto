@@ -7,10 +7,14 @@ from logger import Logger
 from proxy_page import ProxyPage
 from task_registry import TASKS
 from check_version import check_for_update
+from datetime import datetime
 
 check_for_update()  # 更新检查
 
-COOKIE_PATH = "mcd_cookies.json"
+def get_today_cookie_path(task_key):
+    date_str = datetime.now().strftime("%Y%m%d")
+    os.makedirs("cookies", exist_ok=True)
+    return os.path.join("cookies", f"{task_key}_{date_str}.json")
 
 def choose_import_file():
     files = [f for f in os.listdir("import") if f.endswith(".xlsx")]
@@ -31,8 +35,6 @@ def choose_import_file():
     except:
         print("❌ 选择无效")
         sys.exit(1)
-
-
 
 def save_result_excel(logger,input_path):
     # input_path = f"import/{logger.task_key}.xlsx"
@@ -95,24 +97,17 @@ def process_store_codes(store_codes, task_runner, task_key,import_path):
     logger = Logger(task_key)
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False,slow_mo=500)
-        context = None
-        if os.path.exists(COOKIE_PATH) and time.time() - os.path.getmtime(COOKIE_PATH) < 12 * 3600:
-            context = browser.new_context(storage_state=COOKIE_PATH)
-            print("✅ 使用已有的 cookie 登录")
+        cookie_path = get_today_cookie_path(task_key)
+        if os.path.exists(cookie_path):
+            context = browser.new_context(storage_state=cookie_path)
+            print(f"✅ 已自动登录：{cookie_path}")
         else:
             context = browser.new_context()
-        page = context.new_page()
-        # ⛔ 强制要求任务必须配置 URL
-        task_config = TASKS[task_key]
-        if "url" not in task_config:
-            print(f"❌ 任务 [{task_key}] 未配置登录地址，请在 task_registry.py 中添加 'url' 字段")
-            sys.exit(1)
-        page.goto(task_config["url"])
-
-        if not os.path.exists(COOKIE_PATH):
+            page = context.new_page()
+            page.goto(TASKS[task_key]["url"])
             input("🟡 请手动登录后按回车继续...")
-            context.storage_state(path=COOKIE_PATH)
-            print("✅ 登录状态已保存")
+            context.storage_state(path=cookie_path)
+            print(f"✅ 已保存 cookie：{cookie_path}")
 
         for code in store_codes:
             if code != "__init__":
