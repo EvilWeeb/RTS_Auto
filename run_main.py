@@ -104,6 +104,8 @@ def process_store_codes(store_codes, task_runner, task_key,import_path):
         cookie_path = get_today_cookie_path(task_key)
         if os.path.exists(cookie_path):
             context = browser.new_context(storage_state=cookie_path)
+            page = context.new_page()
+            page.goto(TASKS[task_key]["url"])
             print(f"✅ 已自动登录：{cookie_path}")
         else:
             context = browser.new_context()
