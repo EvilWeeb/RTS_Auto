@@ -1,10 +1,11 @@
 def pull_history_acc(page, row:dict):
-    store_code = str(row["store_code"])
-
-    if store_code == "__init__":
+    
+    if row.get("__init__"):
         page.get_by_text("门店中心").click()
         page.get_by_text("餐厅配置发布管理").click()
         return
+    
+    store_code = str(row["store_code"])
 
     page.get_by_role("menuitem", name="餐厅列表").click()
     page.get_by_placeholder("请输入餐厅号/餐厅名").fill(store_code)

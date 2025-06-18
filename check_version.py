@@ -27,7 +27,7 @@ def get_local_commit():
 def pull_updates():
     try:
         subprocess.run(["git", "pull", "origin", "main"], check=True)
-        print("✅ 已成功拉取最新代码")
+        return "updated"
     except subprocess.CalledProcessError as e:
         print(f"❌ Git 拉取失败：{e}")
 

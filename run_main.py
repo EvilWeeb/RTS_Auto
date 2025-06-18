@@ -9,7 +9,10 @@ from task_registry import TASKS
 from check_version import check_for_update
 from datetime import datetime
 
-check_for_update()  # 更新检查
+result = check_for_update()
+if result == "updated":
+    input("\n🟢 已更新到最新版，请按回车退出并重新运行脚本...")
+    sys.exit(0)
 
 def ensure_directories():
     for folder in ["import", "result", "logs"]:
