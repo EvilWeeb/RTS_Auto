@@ -19,8 +19,9 @@ def set_DBM_Merchantid(page, row:dict):
             index = i - 2
             break
     # 构造 XPath 点击账号管理
-    page.wait_for_selector(f'xpath=//*[@id="root-web-boss"]/div[{index + 7}]/div/div/ul/li[4]/span/a[text()="DMB及商户号设置"]', timeout=3000)
-    page.locator(f'xpath=//*[@id="root-web-boss"]/div[{index + 7}]/div/div/ul/li[4]/span/a[text()="DMB及商户号设置"]').click()
+    page.wait_for_selector(f'xpath=//*[@id="root-web-boss"]/div[{index + 7}]/div/div/ul/li[5]/span/a', timeout=3000)
+    page.locator(f'xpath=//*[@id="root-web-boss"]/div[{index + 7}]/div/div/ul/li[5]/span/a').click()
+                        #  //*[@id="root-web-boss"]/div[8]/div/div/ul/li[5]/span/a
     page.locator("#list_0_unionPayDealerCode").fill(Merchantid)
     if dbmip != "nan":  # 只有不是 NaN 时才执行填充
         page.locator("#list_0_dmbDeviceIp").fill(dbmip)
