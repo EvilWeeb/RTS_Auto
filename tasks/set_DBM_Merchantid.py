@@ -24,5 +24,8 @@ def set_DBM_Merchantid(page, row:dict):
     if Merchantid != "nan":  # 只有不是 NaN 时才执行填充
         page.locator("#list_0_unionPayDealerCode").fill(Merchantid)
     if dbmip != "nan":  # 只有不是 NaN 时才执行填充
-        page.locator("#list_0_dmbDeviceIp").fill(dbmip)
+        if dbmip == "N":
+            page.locator("#list_0_dmbDeviceIp").fill("N/A")
+        else:
+            page.locator("#list_0_dmbDeviceIp").fill(dbmip)
     page.get_by_role("button", name="保存").click()
