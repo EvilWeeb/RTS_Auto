@@ -14,4 +14,9 @@ TASKS = {
         "required_columns": ["uscode", "银联商户号","DMB IP地址"],
         "url": "https://boss.uat.mcdonalds.cn/"
     },
+        "sunflowerGrayscale": {
+        "name": "向日葵应用灰度配置",
+        "required_columns": ["uscode"],
+        "url": "https://boss.mcdonalds.cn/cms/sunflowerGrayscale/grayReleasePublic"
+    },
 }
