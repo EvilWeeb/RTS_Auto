@@ -25,5 +25,6 @@ def sunflowerGrayscale(page, row:dict):
         checkbox.first.click()
         button = container.locator('button.pfe-btn')
         button.click()
+        print(f"✅ 添加 {uscode} 餐厅成功")
 
     input("\n🛑 敏感操作提醒：所有门店操作已完成，请核对后手动点击【保存】按钮提交更改。保存后回车关闭软件。")
