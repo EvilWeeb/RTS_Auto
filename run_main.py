@@ -102,12 +102,12 @@ def process_store_codes(key_column,store_list, task_runner, task_key,import_path
         browser = p.chromium.launch(headless=False,slow_mo=500)
         cookie_path = get_today_cookie_path(task_key)
         if os.path.exists(cookie_path):
-            context = browser.new_context(storage_state=cookie_path)
+            context = browser.new_context(storage_state=cookie_path,viewport={"width": 1920, "height": 1080})
             page = context.new_page()
             page.goto(TASKS[task_key]["url"])
             print(f"✅ 已自动登录：{cookie_path}")
         else:
-            context = browser.new_context()
+            context = browser.new_context(viewport={"width": 1920, "height": 1080})
             page = context.new_page()
             page.goto(TASKS[task_key]["url"])
             input("🟡 请手动登录后按回车继续...")
@@ -123,6 +123,7 @@ def process_store_codes(key_column,store_list, task_runner, task_key,import_path
                 proxy = ProxyPage(page, logger, key_value)
                 task_runner(proxy, record)  # ✅ 传入整行 record
             except Exception as e:
+                print(e)
                 logger.log_failure(key_value, "任务函数异常", e)
 
         logger.save()
