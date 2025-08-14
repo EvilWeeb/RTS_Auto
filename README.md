@@ -24,7 +24,7 @@
 ## 🚀 使用方法
 
 ### 1. 安装依赖
-
+任意目录打开cmd输入
 ```bash
 pip install -r requirements.txt
 playwright install chromium
@@ -36,6 +36,8 @@ playwright install chromium
 
 ```bash
 python run_main.py
+或点击目录下
+运行.bat
 ```
 
 你将被提示：
